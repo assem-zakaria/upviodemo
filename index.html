@@ -40,6 +40,12 @@
 
             <div id="bg_style_3" class="animated-bg-cont"></div>
 
+            <div id="bg_style_4" class="animated-bg-cont"></div>
+            
+            <div id="bg_style_5" class="animated-bg-cont"></div>
+
+            
+
         </main>
     <!-- End Main -->
 
@@ -122,6 +128,36 @@
                       maxDistance: 25.00,
                       spacing: 20.00
                     });
+
+
+                    VANTA.FOG({
+                      el: "#bg_style_4",
+                      mouseControls: true,
+                      touchControls: true,
+                      gyroControls: false,  
+                      minHeight: 200.00,
+                      minWidth: 200.00,
+                      highlightColor: 0xf0ff,
+                      midtoneColor: 0xff00d1,
+                      baseColor: 0x19dcff,
+                      speed: 2.30,
+                      zoom: 0.60
+                    })
+
+                    VANTA.FOG({
+                      el: "#bg_style_5",
+                      mouseControls: true,
+                      touchControls: true,
+                      gyroControls: false,
+                      minHeight: 200.00,
+                      minWidth: 200.00,
+                      highlightColor: 0xf0ff,
+                      midtoneColor: 0xff00d1,
+                      lowlightColor: 0xff96,
+                      baseColor: 0x0,
+                      speed: 2.30,
+                      zoom: 0.60
+                    })
 
 
 
