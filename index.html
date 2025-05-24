@@ -1,1 +1,379 @@
+<!DOCTYPE HTML>
+<html lang="en-US" class="no-scroll">
 
+<head>
+    <meta charset="utf-8">
+    <title>UpVio Demo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="UpVio Demo"/>
+
+    <!-- Begin Stylesheets -->
+        <link type="text/css" rel="stylesheet" href="css/reset.css">
+        <link type="text/css" rel="stylesheet" href="css/swiper-bundle.min.css">
+        <link type="text/css" rel="stylesheet" href="css/styles.css">
+    <!-- End Stylesheets -->
+</head>
+
+    <style type="text/css">
+        
+        .animated-bg-cont {
+            height: 100vh;
+            width: 100%;
+        }
+
+
+
+    </style>
+
+
+<body>
+
+    <!-- Begin Main -->
+        <main>
+
+            <!--  PIXI Effect  -->
+                <canvas id="serviceCanvas"></canvas>
+
+
+
+        </main>
+    <!-- End Main -->
+
+
+    <!-- Begin JavaScript Files -->
+        <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+        <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/7.2.4/pixi.min.js"></script> -->
+        <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r121/three.min.js"></script>
+
+        <!-- <script src="https://cdn.jsdelivr.net/npm/pixi-filters@latest/dist/browser/pixi-filters.min.js"></script> -->
+
+
+        
+    <!-- End JavaScript Files -->
+
+
+    
+
+
+    <!-- Begin Animation JavaScript -->
+        <script type="text/javascript">
+
+            (function () {
+
+                //  Variables
+                    const canvas_el = document.getElementById('serviceCanvas');
+
+                //  PIXI Canvas
+                    //  Create App
+                        // const app = new PIXI.Application({
+                        //     width: document.documentElement.clientWidth,
+                        //     height: window.innerHeight,
+                        //     // backgroundAlpha: 0, 
+                        //     view: canvas_el, 
+                        // });
+
+                 
+
+
+                // const canvas = document.getElementById('serviceCanvas');
+                // const scene = new THREE.Scene();
+                // scene.background = new THREE.Color(0x000000); // Black background
+
+                // const camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 1000);
+                // const baseCameraPosition = { x: 0, y: 40, z: -80 }; // Store original position
+                // const baseLookAt = { x: -80, y: -80, z: 0 }; // Store original look at target
+                // camera.position.set(baseCameraPosition.x, baseCameraPosition.y, baseCameraPosition.z);
+                // camera.lookAt(baseLookAt.x, baseLookAt.y, baseLookAt.z);
+
+                // const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+                // renderer.setSize(window.innerWidth, window.innerHeight);
+                // renderer.setPixelRatio(window.devicePixelRatio);
+
+                // // Mouse tracking variables
+                // let mouse = { x: 0, y: 0 };
+                // const mouseInfluence = 2; // How much the mouse affects camera movement
+
+                // // Mouse move event listener
+                // canvas.addEventListener('mousemove', (event) => {
+                //   // Normalize mouse coordinates to -1 to 1 range
+                //   mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+                //   mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+                // });
+
+                // // Sphere of small spheres
+                // const parent = new THREE.Object3D();
+                // const sphereRadius = 50;
+                // const sphereDetail = 40;
+
+                // const baseGeometry = new THREE.SphereGeometry(0.1, 18, 18);
+                // const baseMaterial = new THREE.MeshStandardMaterial({ color: 0xffffff });
+
+                // for (let lat = 0; lat <= sphereDetail; lat++) {
+                //   const theta = (lat / sphereDetail) * Math.PI;
+                //   for (let lon = 0; lon <= sphereDetail; lon++) {
+                //     const phi = (lon / sphereDetail) * Math.PI * 2;
+
+                //     const x = sphereRadius * Math.sin(theta) * Math.cos(phi);
+                //     const y = sphereRadius * Math.cos(theta);
+                //     const z = sphereRadius * Math.sin(theta) * Math.sin(phi);
+
+                //     const sphere = new THREE.Mesh(baseGeometry, baseMaterial);
+                //     sphere.position.set(x, y, z);
+                //     parent.add(sphere);
+                //   }
+                // }
+
+                // scene.add(parent);
+
+                // // Lights
+                // const ambientLight = new THREE.AmbientLight(0xffffff, 1.5);
+                // scene.add(ambientLight);
+
+                // // SPOTS (gradient sprites)
+                // const spotTextures = [];
+                // const spotColors = [0x7957ff, 0xfb47d8]; // Purple & pink
+
+                // spotColors.forEach((color) => {
+                //   const canvas = document.createElement('canvas');
+                //   canvas.width = 128;
+                //   canvas.height = 128;
+                //   const ctx = canvas.getContext('2d');
+
+                //   const gradient = ctx.createRadialGradient(64, 64, 0, 64, 64, 64);
+                //   gradient.addColorStop(0, `rgba(${(color >> 16) & 255}, ${(color >> 8) & 255}, ${color & 255}, 0.6)`);
+                //   gradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
+                //   ctx.fillStyle = gradient;
+                //   ctx.fillRect(0, 0, 128, 128);
+
+                //   const texture = new THREE.CanvasTexture(canvas);
+                //   spotTextures.push(texture);
+                // });
+
+                // const spots = [];
+
+                // const spotPositions = [
+                //   { position: [-12, 12, -4], textureIndex: 0 },
+                //   { position: [12, -12, -4], textureIndex: 1 }
+                // ];
+
+                // spotPositions.forEach(({ position, textureIndex }) => {
+                //   const material = new THREE.SpriteMaterial({
+                //     map: spotTextures[textureIndex],
+                //     blending: THREE.AdditiveBlending,
+                //     transparent: true,
+                //     depthWrite: false,
+                //   });
+
+                //   const sprite = new THREE.Sprite(material);
+                //   sprite.position.set(...position);
+                //   sprite.scale.set(220, 220, 2); // Large gradient spot
+                //   scene.add(sprite);
+                //   spots.push(sprite);
+                // });
+
+                // // Animate
+                // function animate() {
+                //   requestAnimationFrame(animate);
+                  
+                //   // Update camera position based on mouse movement
+                //   camera.position.x = baseCameraPosition.x + mouse.x * mouseInfluence;
+                //   camera.position.y = baseCameraPosition.y + mouse.y * mouseInfluence;
+                  
+                //   // Update look at target to maintain the viewing angle
+                //   camera.lookAt(
+                //     baseLookAt.x + mouse.x * mouseInfluence * 1.5,
+                //     baseLookAt.y + mouse.y * mouseInfluence * 1.5,
+                //   );
+                  
+                //   parent.rotation.y += 0.002; // Slow rotation for effect
+                //   renderer.render(scene, camera);
+                // }
+
+                // animate();
+
+                // // Resize
+                // window.addEventListener('resize', () => {
+                //   camera.aspect = window.innerWidth / window.innerHeight;
+                //   camera.updateProjectionMatrix();
+                //   renderer.setSize(window.innerWidth, window.innerHeight);
+                // });
+
+                ///////////////////////////////////////////////////////////
+
+
+                    // Updated Three.js code with solid single-color triangles
+
+                const canvas = document.getElementById('serviceCanvas');
+                const scene = new THREE.Scene();
+                scene.background = new THREE.Color(0x000000);
+
+                const camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 1000);
+                const baseCameraPosition = { x: 0, y: 40, z: -80 };  // -200 to -80
+                const baseLookAt = { x: -80, y: -80, z: 0 };
+                camera.position.set(baseCameraPosition.x, baseCameraPosition.y, baseCameraPosition.z);
+                camera.lookAt(baseLookAt.x, baseLookAt.y, baseLookAt.z);
+
+                const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+                renderer.setSize(window.innerWidth, window.innerHeight);
+                renderer.setPixelRatio(window.devicePixelRatio);
+
+                // Lights
+                const ambientLight = new THREE.AmbientLight(0xffffff, 1);
+                scene.add(ambientLight);
+                const dirLight = new THREE.DirectionalLight(0xffffff, 2);
+                dirLight.position.set(0, 100, 100);
+                scene.add(dirLight);
+
+                let mouse = { x: 0, y: 0 };
+                const mouseInfluence = 2;
+                canvas.addEventListener('mousemove', (event) => {
+                  mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+                  mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+                });
+
+
+
+                const parent = new THREE.Object3D();
+                const sphereRadius = 50;
+                const sphereDetail = 40;
+                const baseGeometry = new THREE.SphereGeometry(0.1, 18, 18);
+                const baseMaterial = new THREE.MeshStandardMaterial({ color: 0xffffff });
+
+                for (let lat = 0; lat <= sphereDetail; lat++) {
+                  const theta = (lat / sphereDetail) * Math.PI;
+                  for (let lon = 0; lon <= sphereDetail; lon++) {
+                    const phi = (lon / sphereDetail) * Math.PI * 2;
+                    const x = sphereRadius * Math.sin(theta) * Math.cos(phi);
+                    const y = sphereRadius * Math.cos(theta);
+                    const z = sphereRadius * Math.sin(theta) * Math.sin(phi);
+                    const sphere = new THREE.Mesh(baseGeometry, baseMaterial);
+                    sphere.position.set(x, y, z);
+                    parent.add(sphere);
+                  }
+                }
+
+                scene.add(parent);
+
+                
+                
+
+                // Gradient spotlights
+                const spotTextures = [];
+                const spotColors = [0x7957ff, 0xfb47d8];
+
+                spotColors.forEach((color) => {
+                  const canvas = document.createElement('canvas');
+                  canvas.width = 128;
+                  canvas.height = 128;
+                  const ctx = canvas.getContext('2d');
+                  const gradient = ctx.createRadialGradient(64, 64, 0, 64, 64, 64);
+                  gradient.addColorStop(0, `rgba(${(color >> 16) & 255}, ${(color >> 8) & 255}, ${color & 255}, 0.6)`);
+                  gradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
+                  ctx.fillStyle = gradient;
+                  ctx.fillRect(0, 0, 128, 128);
+                  const texture = new THREE.CanvasTexture(canvas);
+                  spotTextures.push(texture);
+                });
+
+                const spots = [];
+                const spotPositions = [
+                  { position: [-12, 12, -4], textureIndex: 0 },
+                  { position: [12, -12, -4], textureIndex: 1 }
+                ];
+
+                spotPositions.forEach(({ position, textureIndex }) => {
+                  const material = new THREE.SpriteMaterial({
+                    map: spotTextures[textureIndex],
+                    blending: THREE.AdditiveBlending,
+                    transparent: true,
+                    depthWrite: false,
+                  });
+                  const sprite = new THREE.Sprite(material);
+                  sprite.position.set(...position);
+                  sprite.scale.set(220, 220, 2);
+                  scene.add(sprite);
+                  spots.push(sprite);
+                });
+
+                function animate() {
+                  requestAnimationFrame(animate);
+                  camera.position.x = baseCameraPosition.x + mouse.x * mouseInfluence;
+                  camera.position.y = baseCameraPosition.y + mouse.y * mouseInfluence;
+                  camera.lookAt(
+                    baseLookAt.x + mouse.x * mouseInfluence * 1.5,
+                    baseLookAt.y + mouse.y * mouseInfluence * 1.5
+                  );
+                  parent.rotation.y += 0.002;
+                  renderer.render(scene, camera);
+                }
+
+                animate();
+
+                window.addEventListener('resize', () => {
+                  camera.aspect = window.innerWidth / window.innerHeight;
+                  camera.updateProjectionMatrix();
+                  renderer.setSize(window.innerWidth, window.innerHeight);
+                });
+
+
+
+
+
+
+
+
+
+                //  Check DOMContentLoaded and load (assets (images, stylesheets, fonts, etc..) events are done
+                    document.addEventListener("DOMContentLoaded", () => {
+                        document.fonts.ready.then(() => {
+                            setTimeout(() => {
+                                if (document.readyState === "complete") {
+                                    servicesPageFunc();
+                                } else {
+                                    window.addEventListener("load", servicesPageFunc);
+                                }
+                            }, 500);
+                        });
+                    });
+
+                //  Services Page Function
+                    function servicesPageFunc() {
+
+                        //  GSAP Config
+                            gsap.registerPlugin(ScrollTrigger);
+                            gsap.config({ force3D: true, trialWarn: false });
+
+                        //  Update ScrollTrigger on resize
+                            let resizeTimeout;
+                            window.addEventListener("resize", () => {
+                              clearTimeout(resizeTimeout);
+                              resizeTimeout = setTimeout(() => {
+                                ScrollTrigger.refresh();
+                              }, 200);
+                            });
+
+                        //  GSAP Media Query
+                            let gsapMediaQueries = gsap.matchMedia();
+
+                            gsapMediaQueries.add("(min-width: 768px)", () => {
+                             
+                            });
+
+                            gsapMediaQueries.add("(max-width: 767px)", () => {
+
+                            });
+                    }
+
+            })();
+        </script>
+    <!-- End Animation JavaScript -->
+
+
+</body>
+
+
+</html>
